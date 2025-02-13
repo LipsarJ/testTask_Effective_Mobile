@@ -2,8 +2,10 @@ package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,40 +15,43 @@ import java.util.Set;
 import static java.time.ZoneOffset.UTC;
 
 @Entity
-@Table(name = "users")
+@Table(name = "tasks")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String title;
 
     @Column(nullable = false)
-    private String password;
+    private String description;
 
     @Column(nullable = false)
-    @Email
-    private String email;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
+
+    @Column
+    private String comments;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 
     @ManyToMany
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
-
-    @OneToMany(mappedBy = "creator")
-    @JsonIgnore
-    private Set<Task> createdTasks = new HashSet<>();
-
-    @ManyToMany(mappedBy = "developers")
-    @JsonIgnore
-    private Set<Task> tasksToDo;
+    @JoinTable( name = "tasks_users",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> developers = new HashSet<>();
 
     @Column(nullable = false)
     private LocalDateTime createDate;
@@ -67,7 +72,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return 410;
+        return 411;
     }
 
     @Override
@@ -75,17 +80,21 @@ public class User {
         if (this == obj) return true;
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
-        User other = (User) obj;
+        Task other = (Task) obj;
         return id != null && id.equals(other.getId());
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Task{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status'" + status + '\'' +
+                ", priority'" + priority + '\'' +
+                ", comments'" + comments + '\'' +
+                ", creator'" + creator + '\'' +
+                ", developers'" + developers + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';
