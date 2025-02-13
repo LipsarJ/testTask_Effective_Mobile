@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Data
 @Schema(description = "ДТО с информацией о пользователе")
@@ -16,4 +17,7 @@ public class ResponseUserDTO {
 
     @Schema(description = "Дата обновления", example = "2023-08-24T14:30:00Z")
     private OffsetDateTime updateDate;
+
+    @Schema(description = "Набор ролей пользователя", example = "[\"USER\", \"ADMIN\"]")
+    private Set<ResponseRoleDTO> roles;
 }

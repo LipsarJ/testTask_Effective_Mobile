@@ -36,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
@@ -99,13 +102,18 @@ public class AuthController {
 
             ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
+
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
             ResponseCookie jwtRefreshCookie = jwtUtils.generateRefreshJwtCookie(refreshToken.getToken());
 
             LoginDTO userLoginDto = new LoginDTO(userDetails.getId(),
                     userDetails.getUsername(),
-                    userDetails.getEmail());
+                    userDetails.getEmail(),
+                    roles);
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())

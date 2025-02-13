@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.time.ZoneOffset.UTC;
 
@@ -30,6 +32,12 @@ public class User {
     @Column(nullable = false)
     @Email
     String email;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @Column(nullable = false)
     private LocalDateTime createDate;
