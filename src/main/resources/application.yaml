@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:testTask}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:Notna20002}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      show-sql: true
+  properties:
+    hibernate:
+    format_sql: true
+app:
+  security:
+    refreshTokenDurationMs: 600000000
+    jwtSecret: "======================TestTaskApp==========================="
+    jwtExpirationMs: 1800000
+    jwtCookie: "test-jwt"
+    jwtRefreshCookie: "test-jwt-refresh"
