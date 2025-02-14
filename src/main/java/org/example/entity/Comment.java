@@ -29,9 +29,10 @@ public class Comment {
     @Column(nullable = false)
     private String text;
 
-    @ManyToMany(mappedBy = "comments")
+    @ManyToOne
+    @JoinColumn(name = "task_id", nullable = false)
     @JsonIgnore
-    private Set<Task> tasks = new HashSet<>();
+    private Task task;
 
     @ManyToOne
     @JoinColumn(name = "commentator_id", nullable = false)

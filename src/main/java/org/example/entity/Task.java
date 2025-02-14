@@ -50,10 +50,7 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> developers = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable( name = "tasks_comments",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    @OneToMany(mappedBy = "task_id")
     private Set<Comment> comments = new HashSet<>();
 
     @Column(nullable = false)
