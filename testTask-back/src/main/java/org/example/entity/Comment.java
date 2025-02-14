@@ -71,7 +71,7 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Comment{" +
                 "id=" + id +
                 ", commentator='" + commentator + '\'' +
                 ", text='" + text + '\'' +

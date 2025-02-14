@@ -73,6 +73,7 @@ public class TaskService {
         });
 
         task.setStatus(TaskStatus.IN_QUEUE);
+        task.setPriority(TaskPriority.valueOf(requestTaskDTO.getPriority()));
 
         taskRepo.save(task);
         return taskMapper.toResponseTaskDTO(task);

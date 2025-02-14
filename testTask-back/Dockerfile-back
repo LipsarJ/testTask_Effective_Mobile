@@ -1,0 +1,9 @@
+FROM openjdk:17
+
+WORKDIR /app
+
+COPY build/libs/testTask_Effective_Mobile-1.0-SNAPSHOT.jar /app/application.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "application.jar"]
