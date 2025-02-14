@@ -15,46 +15,27 @@ import java.util.Set;
 import static java.time.ZoneOffset.UTC;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "comments")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String text;
 
-    @Column(nullable = false)
-    private String description;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TaskStatus status;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TaskPriority priority;
+    @ManyToMany(mappedBy = "comments")
+    @JsonIgnore
+    private Set<Task> tasks = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
-
-    @ManyToMany
-    @JoinTable( name = "tasks_users",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> developers = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable( name = "tasks_comments",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private Set<Comment> comments = new HashSet<>();
+    @JoinColumn(name = "commentator_id", nullable = false)
+    private User commentator;
 
     @Column(nullable = false)
     private LocalDateTime createDate;
@@ -75,7 +56,7 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return 411;
+        return 412;
     }
 
     @Override
@@ -83,23 +64,19 @@ public class Task {
         if (this == obj) return true;
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
-        Task other = (Task) obj;
+        Comment other = (Comment) obj;
         return id != null && id.equals(other.getId());
     }
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "User{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status'" + status + '\'' +
-                ", priority'" + priority + '\'' +
-                ", comments'" + comments + '\'' +
-                ", creator'" + creator + '\'' +
-                ", developers'" + developers + '\'' +
+                ", commentator='" + commentator + '\'' +
+                ", text='" + text + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';
     }
+
 }

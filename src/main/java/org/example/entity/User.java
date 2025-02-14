@@ -48,6 +48,10 @@ public class User {
     @JsonIgnore
     private Set<Task> tasksToDo;
 
+    @OneToMany(mappedBy = "commentator")
+    @JsonIgnore
+    private Set<Comment> comments = new HashSet<>();
+
     @Column(nullable = false)
     private LocalDateTime createDate;
 
