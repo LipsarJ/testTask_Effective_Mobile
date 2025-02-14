@@ -21,7 +21,6 @@ import org.example.repo.UserRepo;
 import org.example.repo.spec.TaskSpecification;
 import org.example.sequrity.service.UserContext;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -44,9 +43,6 @@ public class TaskService {
     }
 
     public Page<ResponseTaskDTO> getTasksForUser(String username, String filterText, Pageable pageable) {
-        if (username.isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be empty");
-        }
 
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));

@@ -1,12 +1,16 @@
 package org.example.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "ДТО с информацией о пользователе")
 public class ResponseUserDTO {
     @Schema(description = "Идентификатор пользователя", example = "1")
