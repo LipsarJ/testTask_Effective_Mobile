@@ -57,9 +57,9 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/register").permitAll()
-                                .requestMatchers("/api/auth/refreshtoken").permitAll()
-                                .requestMatchers("/api/auth/signin").permitAll()
+                        auth.requestMatchers("/api/v1/auth/register").permitAll()
+                                .requestMatchers("/api/v1/auth/refreshtoken").permitAll()
+                                .requestMatchers("/api/v1/auth/signin").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()

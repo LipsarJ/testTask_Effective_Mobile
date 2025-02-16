@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +17,6 @@ public class ResponseCommentDTO {
     private String text;
     @Schema(description = "Имя создателя комментария")
     private ResponseUserDTO commentator;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private OffsetDateTime createDate;
+    private OffsetDateTime updateDate;
 }

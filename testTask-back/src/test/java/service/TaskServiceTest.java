@@ -1,6 +1,7 @@
 package service;
 
 import org.example.dto.request.RequestTaskDTO;
+import org.example.dto.request.UpdateTaskStatusDTO;
 import org.example.dto.response.ResponseTaskDTO;
 import org.example.dto.response.ResponseUserDTO;
 import org.example.entity.Task;
@@ -10,6 +11,7 @@ import org.example.entity.User;
 import org.example.mapper.TaskMapper;
 import org.example.repo.TaskRepo;
 import org.example.repo.UserRepo;
+import org.example.repo.filter.FilterParam;
 import org.example.sequrity.service.UserContext;
 import org.example.service.TaskService;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -103,7 +102,13 @@ class TaskServiceTest {
         when(taskRepo.findAll(any(Specification.class), eq(pageable))).thenReturn(taskPage);
         when(taskMapper.toResponseTaskDTO(any(Task.class))).thenReturn(responseTaskDTO);
 
-        Page<ResponseTaskDTO> result = taskService.getTasksForUser("testUser", "", pageable);
+        FilterParam filterParam = new FilterParam();
+        List<String> usernames = new ArrayList<>();
+        usernames.add("testUser");
+        filterParam.setUsernames(usernames);
+        filterParam.setFilterText("");
+
+        Page<ResponseTaskDTO> result = taskService.getTasksForUser(filterParam, pageable);
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
@@ -145,7 +150,9 @@ class TaskServiceTest {
         when(taskRepo.findById(1L)).thenReturn(Optional.of(testTask));
         when(taskMapper.toResponseTaskDTO(any(Task.class))).thenReturn(responseTaskDTO);
 
-        ResponseTaskDTO result = taskService.updateStatus(1L, "COMPLETED");
+        UpdateTaskStatusDTO updateTaskStatusDTO = new UpdateTaskStatusDTO("COMPLETED");
+
+        ResponseTaskDTO result = taskService.updateStatus(1L, updateTaskStatusDTO);
 
         assertNotNull(result);
         assertEquals(TaskStatus.COMPLETED, testTask.getStatus());

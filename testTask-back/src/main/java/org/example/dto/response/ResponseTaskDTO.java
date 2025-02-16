@@ -6,6 +6,7 @@ import org.example.entity.TaskPriority;
 import org.example.entity.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Data
@@ -18,6 +19,6 @@ public class ResponseTaskDTO {
     private TaskPriority priority;
     private ResponseUserDTO creator;
     private Set<ResponseUserDTO> developers;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private OffsetDateTime createDate;
+    private OffsetDateTime updateDate;
 }

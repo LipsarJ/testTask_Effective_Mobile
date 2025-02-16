@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.controlleradvice.Errors;
 import org.example.dto.request.RequestTaskDTO;
 import org.example.dto.request.RequestUserDTO;
+import org.example.dto.request.UpdateTaskStatusDTO;
 import org.example.dto.response.ResponseTaskDTO;
 import org.example.entity.Task;
 import org.example.entity.TaskPriority;
@@ -18,6 +19,7 @@ import org.example.exception.extend.UserNotFoundException;
 import org.example.mapper.TaskMapper;
 import org.example.repo.TaskRepo;
 import org.example.repo.UserRepo;
+import org.example.repo.filter.FilterParam;
 import org.example.repo.spec.TaskSpecification;
 import org.example.sequrity.service.UserContext;
 import org.springframework.data.domain.Page;
@@ -36,22 +38,18 @@ public class TaskService {
     private final UserContext userContext;
     private final UserRepo userRepo;
 
-    public Page<ResponseTaskDTO> getAllTasks(String filterText, Pageable pageable) {
-        Specification<Task> spec = TaskSpecification.searchByFilterText(filterText);
-        Page<Task> tasksPage = taskRepo.findAll(spec, pageable);
-        return tasksPage.map(taskMapper::toResponseTaskDTO);
-    }
-
-    public Page<ResponseTaskDTO> getTasksForUser(String username, String filterText, Pageable pageable) {
-
-        User user = userRepo.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+    public Page<ResponseTaskDTO> getTasksForUser(FilterParam filterParam, Pageable pageable) {
 
         Specification<Task> spec = Specification
-                .where(TaskSpecification.searchByFilterText(filterText))
-                .and(TaskSpecification.searchByFilterUser(user));
+                .where(TaskSpecification.searchByFilterText(filterParam.getFilterText()))
+                .and(TaskSpecification.searchByFilterUser(filterParam.getUsernames()));
 
         return taskRepo.findAll(spec, pageable).map(taskMapper::toResponseTaskDTO);
+    }
+
+    public ResponseTaskDTO getTaskByID(Long id) {
+        Task task = taskRepo.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found"));
+        return taskMapper.toResponseTaskDTO(task);
     }
 
     @Transactional
@@ -102,14 +100,14 @@ public class TaskService {
     }
 
     @Transactional
-    public ResponseTaskDTO updateStatus(Long taskID, String status) {
+    public ResponseTaskDTO updateStatus(Long taskID, UpdateTaskStatusDTO updateTaskStatusDTO) {
         User user = userRepo.findByUsername(userContext.getUserDTO().getUsername()).orElseThrow(() -> new UserNotFoundException("User is not found"));
         Task task = taskRepo.findById(taskID).orElseThrow(() -> new TaskNotFoundException("Task not found"));
         if (!task.getDevelopers().contains(user)) {
             throw new ForbiddenException("You are not developer on this task");
         }
         try {
-            task.setStatus(TaskStatus.valueOf(status));
+            task.setStatus(TaskStatus.valueOf(updateTaskStatusDTO.getStatus()));
         } catch (IllegalArgumentException e) {
             throw new InvalidPriorityException("Wrong status for task. Try IN_QUEUE, IN_PROCESS or COMPLETED", Errors.PRIORITY_IS_INVALID);
         }

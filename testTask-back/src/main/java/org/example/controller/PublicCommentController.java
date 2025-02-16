@@ -8,24 +8,25 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.example.controlleradvice.SimpleResponse;
 import org.example.dto.request.RequestCommentDTO;
-import org.example.dto.response.CommentInfoPage;
 import org.example.dto.response.LoginDTO;
+import org.example.dto.response.PageDTO;
 import org.example.dto.response.ResponseCommentDTO;
 import org.example.service.CommentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/tasks/comments")
+@RequestMapping("api/v1/public/task/{id}/comment")
 @RequiredArgsConstructor
-public class CommentController {
-
+@PreAuthorize("hasAuthority('USER')")
+public class PublicCommentController {
     private final CommentService commentService;
 
-    @GetMapping("{taskID}")
+    @GetMapping
     @Operation(summary = "Получить все комментарии для задания с пагинацией")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Возвращает страницу с комментариями",
@@ -38,9 +39,9 @@ public class CommentController {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = SimpleResponse.class)))
     })
-    public CommentInfoPage getAllCommentsForTask(@PathVariable("taskID") Long taskID, Pageable pageable) {
+    public PageDTO<ResponseCommentDTO> getAllCommentsForTask(@PathVariable("id") Long taskID, Pageable pageable) {
         Page<ResponseCommentDTO> commentInfoPage = commentService.getAllCommentsForTask(taskID, pageable);
-        return new CommentInfoPage(
+        return new PageDTO<>(
                 commentInfoPage.getContent(),
                 commentInfoPage.getTotalElements(),
                 pageable.getPageNumber(),
@@ -48,7 +49,7 @@ public class CommentController {
         );
     }
 
-    @PostMapping("{taskID}")
+    @PostMapping
     @Operation(summary = "Создать комментарий к заданию")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Возвращает страницу с комментариями",
@@ -64,9 +65,7 @@ public class CommentController {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = SimpleResponse.class)))
     })
-    public ResponseEntity<ResponseCommentDTO> createComment(@PathVariable("taskID") Long taskID, @RequestBody RequestCommentDTO requestCommentDTO) {
-        return ResponseEntity.ok(commentService.createComment(taskID, requestCommentDTO));
+    public ResponseEntity<ResponseCommentDTO> createCommentForDeveloper(@PathVariable("id") Long taskID, @RequestBody RequestCommentDTO requestCommentDTO) {
+        return ResponseEntity.ok(commentService.createCommentForDeveloper(taskID, requestCommentDTO));
     }
-
-
 }
