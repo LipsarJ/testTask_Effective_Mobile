@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/public/task/{id}/comment")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('USER')")
+@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 public class PublicCommentController {
     private final CommentService commentService;
 

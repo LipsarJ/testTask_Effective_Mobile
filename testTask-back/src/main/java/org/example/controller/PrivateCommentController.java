@@ -20,7 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1//task/{id}/comment")
+@RequestMapping("/api/v1/private/task/{id}/comment")
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 public class PrivateCommentController {
