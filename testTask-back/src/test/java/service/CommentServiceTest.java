@@ -62,22 +62,18 @@ class CommentServiceTest {
     private Task testTask;
     private RequestCommentDTO requestCommentDTO;
     private ResponseCommentDTO responseCommentDTO;
-    private ResponseRoleDTO responseRoleDTO;
-    private ResponseRoleDTO responseAnotherRoleDTO;
     private ResponseUserDTO responseUserDTO;
     private ResponseUserDTO responseAnotherUserDTO;
     private Page<Comment> commentPage;
     private Pageable pageable;
-    private Set<ResponseRoleDTO> responseRoleDTOSet;
-    private Set<ResponseRoleDTO> responseAnotherRoleDTOSet;
 
 
     @BeforeEach
     void setUp() {
-        responseRoleDTO = new ResponseRoleDTO();
+        ResponseRoleDTO responseRoleDTO = new ResponseRoleDTO();
         responseRoleDTO.setRoleName(ERole.USER);
 
-        responseRoleDTOSet = new HashSet<>();
+        Set<ResponseRoleDTO> responseRoleDTOSet = new HashSet<>();
         responseRoleDTOSet.add(responseRoleDTO);
 
         testUser = new User();
@@ -90,10 +86,10 @@ class CommentServiceTest {
         responseUserDTO.setUsername("testUser");
         responseUserDTO.setRoles(responseRoleDTOSet);
 
-        responseAnotherRoleDTO = new ResponseRoleDTO();
+        ResponseRoleDTO responseAnotherRoleDTO = new ResponseRoleDTO();
         responseAnotherRoleDTO.setRoleName(ERole.ADMIN);
 
-        responseAnotherRoleDTOSet = new HashSet<>();
+        Set<ResponseRoleDTO> responseAnotherRoleDTOSet = new HashSet<>();
         responseAnotherRoleDTOSet.add(responseAnotherRoleDTO);
 
         anotherUser = new User();
@@ -124,8 +120,6 @@ class CommentServiceTest {
     @Test
     void getAllCommentsForTask_ShouldReturnComments() {
         when(taskRepo.findById(1L)).thenReturn(Optional.of(testTask));
-        when(userContext.getUserDTO()).thenReturn(responseAnotherUserDTO);
-        when(userRepo.findByUsername("anotherUser")).thenReturn(Optional.of(anotherUser));
         when(commentRepo.findByTask(testTask, pageable)).thenReturn(commentPage);
         when(commentMapper.toResponseCommentDTO(any(Comment.class))).thenReturn(responseCommentDTO);
 
@@ -144,7 +138,7 @@ class CommentServiceTest {
         when(commentMapper.toResponseCommentDTO(any(Comment.class))).thenReturn(responseCommentDTO);
         when(commentRepo.save(any(Comment.class))).thenReturn(new Comment());
 
-        ResponseCommentDTO result = commentService.createComment(1L, requestCommentDTO);
+        ResponseCommentDTO result = commentService.createCommentForAdmin(1L, requestCommentDTO);
 
         assertNotNull(result);
         verify(commentRepo, times(1)).save(any(Comment.class));
@@ -157,7 +151,7 @@ class CommentServiceTest {
         when(userRepo.findByUsername("anotherUser")).thenReturn(Optional.of(anotherUser));
         when(userContext.getUserDTO()).thenReturn(responseAnotherUserDTO);
 
-        assertThrows(CantBeEmptyException.class, () -> commentService.createComment(1L, requestCommentDTO));
+        assertThrows(CantBeEmptyException.class, () -> commentService.createCommentForAdmin(1L, requestCommentDTO));
     }
 
     @Test
@@ -169,13 +163,13 @@ class CommentServiceTest {
         when(userRepo.findByUsername("testUser")).thenReturn(Optional.of(testUser));
         when(userContext.getUserDTO()).thenReturn(responseUserDTO);
 
-        assertThrows(ForbiddenException.class, () -> commentService.createComment(1L, requestCommentDTO));
+        assertThrows(ForbiddenException.class, () -> commentService.createCommentForDeveloper(1L, requestCommentDTO));
     }
 
     @Test
     void createComment_ShouldThrowExceptionIfTaskNotFound() {
         when(taskRepo.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(TaskNotFoundException.class, () -> commentService.createComment(1L, requestCommentDTO));
+        assertThrows(TaskNotFoundException.class, () -> commentService.createCommentForAdmin(1L, requestCommentDTO));
     }
 }

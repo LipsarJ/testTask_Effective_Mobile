@@ -1,104 +1,107 @@
 package controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.controller.AuthController;
+import org.example.controlleradvice.Errors;
+import org.example.controlleradvice.SimpleResponse;
 import org.example.dto.request.LoginUserDTO;
 import org.example.dto.request.SignUpDTO;
-import org.example.entity.User;
-import org.example.repo.UserRepo;
-import org.example.sequrity.JwtUtils;
-import org.example.sequrity.UserDetailsImpl;
-import org.example.sequrity.service.RefreshTokenService;
+import org.example.dto.response.AuthResponseDTO;
+import org.example.dto.response.LoginDTO;
+import org.example.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.AuthenticationException;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.*;
 
-@ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
 
     @InjectMocks
     private AuthController authController;
 
     @Mock
-    private UserRepo userRepo;
-
-    @Mock
-    private RefreshTokenService refreshTokenService;
-
-    @Mock
-    private JwtUtils jwtUtils;
-
-    @Mock
-    private AuthenticationManager authenticationManager;
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
-    @Mock
-    private UserDetailsImpl userDetails;
-
-    private User testUser;
+    private AuthService authService;
 
     @BeforeEach
     void setUp() {
-        testUser = new User();
-        testUser.setUsername("testUser");
-        testUser.setEmail("test@example.com");
-        testUser.setPassword("password");
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void registerUser_ShouldReturnSuccess() {
-        SignUpDTO signUpDTO = new SignUpDTO("testUser", "test@example.com", "password");
+    void registerUser_Success() {
+        SignUpDTO signUpDTO = new SignUpDTO("testUser", "test@example.com", "password123");
 
-        when(userRepo.existsByUsername(signUpDTO.username())).thenReturn(false);
-        when(userRepo.existsByEmail(signUpDTO.email())).thenReturn(false);
-        when(userRepo.save(any(User.class))).thenReturn(testUser);
-        passwordEncoder = new BCryptPasswordEncoder();
+        doNothing().when(authService).registerUser(signUpDTO);
 
         ResponseEntity<?> response = authController.registerUser(signUpDTO);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(userRepo, times(1)).save(any(User.class));
+        assertEquals(OK, response.getStatusCode());
+        assertInstanceOf(SimpleResponse.class, response.getBody());
+        assertEquals("User registered successfully!", ((SimpleResponse) response.getBody()).message());
     }
 
     @Test
-    void signInUser_ShouldReturnJwtTokens() {
-        LoginUserDTO loginUserDTO = new LoginUserDTO("test@example.com", "password");
+    void signInUser_Success() {
+        LoginUserDTO loginDTO = new LoginUserDTO("test@example.com", "password123");
+        LoginDTO userDTO = new LoginDTO(1L, "testUser", "test@example.com", null);
+        AuthResponseDTO authResponse = new AuthResponseDTO(userDTO, "accessToken", "refreshToken");
 
-        Authentication authentication = mock(Authentication.class);
-        when(authenticationManager.authenticate(any())).thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(null);
-        when(jwtUtils.generateJwtCookie((UserDetailsImpl) any())).thenReturn(null);
-        when(refreshTokenService.createRefreshToken(any())).thenReturn(null);
-        userDetails = new UserDetailsImpl(1L, "testUser", "test@example.com", "password", new ArrayList<>());
+        when(authService.signIn(loginDTO)).thenReturn(authResponse);
 
-        ResponseEntity<?> response = authController.signInUser(loginUserDTO);
+        ResponseEntity<?> response = authController.signInUser(loginDTO);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(OK, response.getStatusCode());
+        assertEquals(userDTO, response.getBody());
     }
 
     @Test
-    void signOutUser_ShouldReturnSuccess() {
-        when(jwtUtils.getCleanJwtCookie()).thenReturn(null);
-        when(jwtUtils.getCleanJwtRefreshCookie()).thenReturn(null);
+    void signInUser_Failure_InvalidCredentials() {
+        LoginUserDTO loginDTO = new LoginUserDTO("test@example.com", "wrongPassword");
+
+        when(authService.signIn(loginDTO)).thenThrow(new AuthenticationException("Invalid credentials") {});
+
+        ResponseEntity<?> response = authController.signInUser(loginDTO);
+
+        assertEquals(UNAUTHORIZED, response.getStatusCode());
+        assertInstanceOf(SimpleResponse.class, response.getBody());
+        assertEquals("Invalid username or password", ((SimpleResponse) response.getBody()).message());
+        assertEquals(Errors.BAD_CREDENTIALS, ((SimpleResponse) response.getBody()).errorCode());
+    }
+
+    @Test
+    void signOutUser_Success() {
+        AuthResponseDTO authResponse = new AuthResponseDTO();
+        authResponse.setAccessToken("cleanAccessToken");
+        authResponse.setRefreshToken("cleanRefreshToken");
+
+        when(authService.signOut()).thenReturn(authResponse);
 
         ResponseEntity<?> response = authController.signOutUser();
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(OK, response.getStatusCode());
+        assertInstanceOf(SimpleResponse.class, response.getBody());
+        assertEquals("You've been signed out!", ((SimpleResponse) response.getBody()).message());
+    }
+
+    @Test
+    void refreshToken_Success() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        AuthResponseDTO authResponse = new AuthResponseDTO();
+        authResponse.setAccessToken("newAccessToken");
+
+        when(authService.refreshToken(request)).thenReturn(authResponse);
+
+        ResponseEntity<?> response = authController.refreshToken(request);
+
+        assertEquals(OK, response.getStatusCode());
+        assertInstanceOf(SimpleResponse.class, response.getBody());
+        assertEquals("Token is refreshed successfully!", ((SimpleResponse) response.getBody()).message());
     }
 }
-

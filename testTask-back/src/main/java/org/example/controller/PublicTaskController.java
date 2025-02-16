@@ -44,8 +44,7 @@ public class PublicTaskController {
                             schema = @Schema(implementation = SimpleResponse.class)))
     })
     public PageDTO<ResponseTaskDTO> getTasksForUser(@ParameterObject @Valid @Parameter @Schema(description = "Параметры фильтрации") FilterParam filterParam,
-                                                    @Schema(name = "Параметры пагинации.", description = "Поле sort должно содержать название поля title " +
-                                                            "сущности Task", implementation = Pageable.class) Pageable pageable) {
+                                                    @Schema(name = "Параметры пагинации.", implementation = Pageable.class) Pageable pageable) {
         Page<ResponseTaskDTO> taskInfoPage = taskService.getTasksForUser(filterParam, pageable);
         return new PageDTO<>(
                 taskInfoPage.getContent(),

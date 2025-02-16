@@ -92,7 +92,7 @@ public class AuthService {
 
     public AuthResponseDTO refreshToken(HttpServletRequest request) {
         String refreshToken = jwtUtils.getJwtRefreshFromCookies(request);
-        if (refreshToken != null && !refreshToken.isEmpty()) {
+        if (refreshToken == null || refreshToken.isEmpty()) {
             throw new TokenRefreshException(refreshToken, "Refresh token is empty!");
         }
         return refreshTokenRepo.findByToken(refreshToken)

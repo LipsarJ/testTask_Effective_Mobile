@@ -50,7 +50,6 @@ class TaskServiceTest {
     private UserContext userContext;
 
     private User testUser;
-    private User anotherUser;
     private Task testTask;
     private Pageable pageable;
     private RequestTaskDTO requestTaskDTO;
@@ -63,10 +62,6 @@ class TaskServiceTest {
         testUser = new User();
         testUser.setId(1L);
         testUser.setUsername("testUser");
-
-        anotherUser = new User();
-        anotherUser.setId(2L);
-        anotherUser.setUsername("anotherUser");
 
         testTask = new Task();
         testTask.setId(1L);
@@ -98,7 +93,6 @@ class TaskServiceTest {
 
     @Test
     void getTasksForUser_ShouldReturnFilteredTasks() {
-        when(userRepo.findByUsername("testUser")).thenReturn(Optional.of(testUser));
         when(taskRepo.findAll(any(Specification.class), eq(pageable))).thenReturn(taskPage);
         when(taskMapper.toResponseTaskDTO(any(Task.class))).thenReturn(responseTaskDTO);
 
@@ -112,7 +106,6 @@ class TaskServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
-        verify(userRepo, times(1)).findByUsername("testUser");
         verify(taskRepo, times(1)).findAll(any(Specification.class), eq(pageable));
     }
 
