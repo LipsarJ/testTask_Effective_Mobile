@@ -12,43 +12,24 @@ import org.example.controlleradvice.Errors;
 import org.example.controlleradvice.SimpleResponse;
 import org.example.dto.request.LoginUserDTO;
 import org.example.dto.request.SignUpDTO;
+import org.example.dto.response.AuthResponseDTO;
 import org.example.dto.response.LoginDTO;
-import org.example.entity.RefreshToken;
-import org.example.entity.User;
-import org.example.exception.TokenRefreshException;
-import org.example.repo.RefreshTokenRepo;
-import org.example.repo.UserRepo;
-import org.example.sequrity.JwtUtils;
-import org.example.sequrity.UserDetailsImpl;
-import org.example.sequrity.service.RefreshTokenService;
+import org.example.service.AuthService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final PasswordEncoder encoder;
-    private final UserRepo userRepo;
-    private final RefreshTokenService refreshTokenService;
-    private final JwtUtils jwtUtils;
-    private final AuthenticationManager authenticationManager;
-    private final RefreshTokenRepo refreshTokenRepo;
+    private final AuthService authService;
 
     @PostMapping("register")
     @Operation(summary = "Регистрация пользователя")
@@ -60,23 +41,8 @@ public class AuthController {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = SimpleResponse.class)))
     })
-
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDTO signUpDTO) {
-
-        if (userRepo.existsByUsername(signUpDTO.username())) {
-            return ResponseEntity.badRequest().body(new SimpleResponse("Error: Username is taken", Errors.USERNAME_TAKEN));
-        }
-        if (userRepo.existsByEmail(signUpDTO.email())) {
-            return ResponseEntity.badRequest().body(new SimpleResponse("Error: Email is taken", Errors.EMAIL_TAKEN));
-        }
-
-        User user = new User();
-        user.setUsername(signUpDTO.username());
-        user.setEmail(signUpDTO.email());
-        user.setPassword(encoder.encode(signUpDTO.password()));
-
-        userRepo.save(user);
-
+        authService.registerUser(signUpDTO);
         return ResponseEntity.ok(new SimpleResponse("User registered successfully!", null));
     }
 
@@ -91,40 +57,21 @@ public class AuthController {
                             schema = @Schema(implementation = SimpleResponse.class)))
     })
     public ResponseEntity<?> signInUser(@Valid @RequestBody LoginUserDTO loginDto) {
-
         try {
-            Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password()));
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
-            List<String> roles = userDetails.getAuthorities().stream()
-                    .map(item -> item.getAuthority())
-                    .collect(Collectors.toList());
-
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-
-            ResponseCookie jwtRefreshCookie = jwtUtils.generateRefreshJwtCookie(refreshToken.getToken());
-
-            LoginDTO userLoginDto = new LoginDTO(userDetails.getId(),
-                    userDetails.getUsername(),
-                    userDetails.getEmail(),
-                    roles);
+            AuthResponseDTO response = authService.signIn(loginDto);
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                    .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
-                    .body(userLoginDto);
+                    .header(HttpHeaders.SET_COOKIE, response.getAccessToken())
+                    .header(HttpHeaders.SET_COOKIE, response.getRefreshToken())
+                    .body(response.getUserDTO());
+
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED)
                     .body(new SimpleResponse("Invalid username or password", Errors.BAD_CREDENTIALS));
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("signout")
     @Operation(summary = "Выход пользователя")
     @ApiResponse(responseCode = "200", description = "Возвращает сообщение о успешном выходе пользователя",
@@ -132,15 +79,15 @@ public class AuthController {
                     schema = @Schema(implementation = SimpleResponse.class)))
     public ResponseEntity<?> signOutUser() {
 
-        ResponseCookie jwtCookie = jwtUtils.getCleanJwtCookie();
-        ResponseCookie jwtRefreshCookie = jwtUtils.getCleanJwtRefreshCookie();
+        AuthResponseDTO response = authService.signOut();
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, response.getAccessToken())
+                .header(HttpHeaders.SET_COOKIE, response.getRefreshToken())
                 .body(new SimpleResponse("You've been signed out!", null));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("refreshtoken")
     @Operation(summary = "Обновление токена")
     @ApiResponses(value = {
@@ -152,22 +99,11 @@ public class AuthController {
                             schema = @Schema(implementation = SimpleResponse.class)))
     })
     public ResponseEntity<?> refreshToken(HttpServletRequest request) {
-        String refreshToken = jwtUtils.getJwtRefreshFromCookies(request);
 
-        if (refreshToken != null && !refreshToken.isEmpty()) {
-            return refreshTokenRepo.findByToken(refreshToken)
-                    .map(refreshTokenService::verifyExpiration)
-                    .map(RefreshToken::getUser)
-                    .map(user -> {
-                        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(user);
+        AuthResponseDTO authResponseDTO = authService.refreshToken(request);
 
-                        return ResponseEntity.ok()
-                                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                                .body(new SimpleResponse("Token is refreshed successfully!", null));
-                    })
-                    .orElseThrow(() -> new TokenRefreshException(refreshToken, "Refresh token is not in the database!"));
-        }
-
-        return ResponseEntity.badRequest().body(new SimpleResponse("Refresh Token is empty!", null));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, authResponseDTO.getAccessToken())
+                .body(new SimpleResponse("Token is refreshed successfully!", null));
     }
 }
