@@ -50,7 +50,7 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> developers = new HashSet<>();
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 
     @Column(nullable = false)
