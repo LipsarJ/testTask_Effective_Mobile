@@ -18,9 +18,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.example.constructor.ApiConstants.HTTP_OK_200_DESCRIPTION;
+import static org.example.constructor.ApiConstants.PRIVATE_V1_COMMENTS;
 
 @RestController
-@RequestMapping("/api/v1/private/task/{id}/comment")
+@RequestMapping(PRIVATE_V1_COMMENTS)
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 public class PrivateCommentController {
@@ -33,7 +34,7 @@ public class PrivateCommentController {
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = PageDTO.class)))
     @CommonErrorApiResponsesWith404
-    public PageDTO<ResponseCommentDTO> getAllCommentsForTask(@PathVariable("id") Long taskID, Pageable pageable) {
+    public PageDTO<ResponseCommentDTO> getAllCommentsForTask(@PathVariable("taskId") Long taskID, Pageable pageable) {
         Page<ResponseCommentDTO> commentInfoPage = commentService.getAllCommentsForTask(taskID, pageable);
         return new PageDTO<>(
                 commentInfoPage.getContent(),
@@ -49,7 +50,7 @@ public class PrivateCommentController {
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ResponseCommentDTO.class)))
     @CommonErrorApiResponsesWith404
-    public ResponseEntity<ResponseCommentDTO> createComment(@PathVariable("id") Long taskID, @RequestBody RequestCommentDTO requestCommentDTO) {
+    public ResponseEntity<ResponseCommentDTO> createComment(@PathVariable("taskId") Long taskID, @RequestBody RequestCommentDTO requestCommentDTO) {
         return ResponseEntity.ok(commentService.createCommentForAdmin(taskID, requestCommentDTO));
     }
 

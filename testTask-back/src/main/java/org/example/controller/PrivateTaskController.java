@@ -23,9 +23,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.example.constructor.ApiConstants.HTTP_OK_200_DESCRIPTION;
+import static org.example.constructor.ApiConstants.PRIVATE_V1_TASKS;
 
 @RestController
-@RequestMapping("/api/v1/private/task")
+@RequestMapping(PRIVATE_V1_TASKS)
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 public class PrivateTaskController {
@@ -48,7 +49,7 @@ public class PrivateTaskController {
         );
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{taskId}")
     @Operation(summary = "Получить задание по id")
     @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -68,23 +69,23 @@ public class PrivateTaskController {
         return ResponseEntity.ok(taskService.createTask(requestTaskDTO));
     }
 
-    @PutMapping("{taskID}")
+    @PutMapping("{taskId}")
     @Operation(summary = "Изменить задание")
     @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ResponseTaskDTO.class)))
     @CommonErrorApiResponsesWith404
-    public ResponseEntity<ResponseTaskDTO> updateTask(@PathVariable Long taskID, @RequestBody RequestTaskDTO requestTaskDTO) {
-        return ResponseEntity.ok(taskService.updateTask(taskID, requestTaskDTO));
+    public ResponseEntity<ResponseTaskDTO> updateTask(@PathVariable Long taskId, @RequestBody RequestTaskDTO requestTaskDTO) {
+        return ResponseEntity.ok(taskService.updateTask(taskId, requestTaskDTO));
     }
 
-    @DeleteMapping("{taskID}")
+    @DeleteMapping("{taskId}")
     @Operation(summary = "Удалить задание")
     @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION)
     @CommonErrorApiResponsesWith404
 
-    public ResponseEntity<Void> deleteTask(@PathVariable Long taskID) {
-        taskService.deleteTask(taskID);
+    public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTask(taskId);
         return ResponseEntity.ok().build();
     }
 }

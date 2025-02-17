@@ -22,9 +22,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.example.constructor.ApiConstants.HTTP_OK_200_DESCRIPTION;
+import static org.example.constructor.ApiConstants.PUBLIC_V1_TASKS;
 
 @RestController
-@RequestMapping("api/v1/public/task")
+@RequestMapping(PUBLIC_V1_TASKS)
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 public class PublicTaskController {
@@ -47,21 +48,21 @@ public class PublicTaskController {
         );
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{taskId}")
     @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ResponseTaskDTO.class)))
     @CommonErrorApiResponsesWith404
-    public ResponseEntity<ResponseTaskDTO> getTaskByID(@PathVariable Long id) {
-        return ResponseEntity.ok(taskService.getTaskByID(id));
+    public ResponseEntity<ResponseTaskDTO> getTaskByID(@PathVariable Long taskId) {
+        return ResponseEntity.ok(taskService.getTaskByID(taskId));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{taskId}")
     @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ResponseTaskDTO.class)))
     @CommonErrorApiResponsesWith404
-    public ResponseEntity<ResponseTaskDTO> updateTaskStatus(@PathVariable Long id, UpdateTaskStatusDTO updateTaskStatusDTO) {
-        return ResponseEntity.ok(taskService.updateStatus(id, updateTaskStatusDTO));
+    public ResponseEntity<ResponseTaskDTO> updateTaskStatus(@PathVariable Long taskId, UpdateTaskStatusDTO updateTaskStatusDTO) {
+        return ResponseEntity.ok(taskService.updateStatus(taskId, updateTaskStatusDTO));
     }
 }
