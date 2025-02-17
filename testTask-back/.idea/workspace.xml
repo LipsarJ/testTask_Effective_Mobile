@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="706e21ee-86ea-4c77-993b-c6431d3b9361" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile-back" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/TestTaskApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/constructor/ApiConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/PrivateCommentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/PrivateTaskController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/PublicCommentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/PublicTaskController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controlleradvice/CommonErrorApiResponses.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controlleradvice/CommonErrorApiResponsesWith404.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controlleradvice/Errors.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controlleradvice/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controlleradvice/SimpleResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/LoginUserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/RequestCommentDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/RequestTaskDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/RequestUserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/SignUpDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/UpdateTaskStatusDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/AuthResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/LoginDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/PageDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/ResponseCommentDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/ResponseRoleDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/ResponseTaskDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/ResponseUserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Comment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/ERole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/RefreshToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Task.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TaskPriority.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TaskStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/BadDataException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/ForbiddenException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/NotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/TokenRefreshException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/extend/CantBeEmptyException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/extend/InvalidPriorityException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/extend/InvalidStatusException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/extend/TaskNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/extend/UserNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/extend/UsernameTakenException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/BaseLocalDateTimeOffsetDateTimeMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/CommentMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/TaskMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/UserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repo/CommentRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repo/RefreshTokenRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repo/TaskRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repo/UserRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repo/filter/FilterParam.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repo/spec/TaskSpecification.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/AuthTokenFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/JwtUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/UserDetailsImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/WebSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/service/RefreshTokenService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/service/UserContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/sequrity/service/UserDetailsServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/CommentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/TaskService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__auth.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__add_roles.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V3__add_task.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V4__add_comments.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V5__edit_comments.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestTaskTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/AuthControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/PrivateCommentControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/PrivateTaskControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/PublicCommentControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/PublicTaskControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/service/AuthServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/service/CommentServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/service/TaskServiceTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LipsarJ&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LipsarJ/testTask_Effective_Mobile.git&quot;,
+    &quot;accountId&quot;: &quot;27a57a9e-3c12-4051-95cb-39a53a2387e0&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2t2Aju57Rv9C51WbJBSev95Imxa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.AuthControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.refreshToken_Success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.registerUser_ShouldReturnSuccess.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.registerUser_Success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.signInUser_ShouldReturnJwtTokens.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.signInUser_Success (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.signInUser_Success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthControllerTest.signOutUser_ShouldReturnSuccess.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.testRefreshToken_invalidToken_shouldThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.testRefreshToken_success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.testRegisterUser_success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.testRegisterUser_usernameTaken_shouldThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.testSignIn_success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthServiceTest.testSignOut.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build testTask-back.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentControllerTest.createComment_ShouldCreateComment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentServiceTest.createComment_ShouldCreateComment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentServiceTest.createComment_ShouldThrowExceptionIfTaskNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentServiceTest.createComment_ShouldThrowExceptionIfTextIsEmpty.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentServiceTest.createComment_ShouldThrowExceptionIfUserNotAllowed.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CommentServiceTest.getAllCommentsForTask_ShouldReturnComments.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PrivateCommentControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PrivateTaskControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PrivateTaskControllerTest.getTaskByID_ShouldReturnTask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicCommentControllerTest.createCommentForDeveloper_ShouldReturnCreatedComment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicCommentControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicTaskControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicTaskControllerTest.getTaskByID_ShouldReturnTask (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicTaskControllerTest.getTaskByID_ShouldReturnTask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicTaskControllerTest.getTasksForUser_ShouldReturnTaskList (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicTaskControllerTest.getTasksForUser_ShouldReturnTaskList.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PublicTaskControllerTest.updateTaskStatus_ShouldReturnUpdatedTask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.createTask_ShouldCreateNewTask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.deleteTask_ShouldDeleteTask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.getTasksForUser_ShouldReturnFilteredTasks.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.updateStatus_ShouldUpdateStatus.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.updateTask_ShouldUpdateExistingTask.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestTaskTests.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.testTask-back [bootJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.testTask-back [test].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.production.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lipsar/IdeaProjects/testTask_Effective_Mobile/testTask-back&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RunManager" selected="Gradle.testTask-back [test]">
+    <configuration name="AuthControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;controller.AuthControllerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PrivateCommentControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;controller.PrivateCommentControllerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PublicTaskControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;controller.PublicTaskControllerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PublicTaskControllerTest.getTasksForUser_ShouldReturnTaskList" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;controller.PublicTaskControllerTest.getTasksForUser_ShouldReturnTaskList&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TaskServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;service.TaskServiceTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="testTask-back [test]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestTaskApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="testTask_Effective_Mobile.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.TestTaskApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="production" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="testTask_Effective_Mobile.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.TestTaskApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.testTask-back [test]" />
+      <item itemvalue="Gradle.PublicTaskControllerTest" />
+      <item itemvalue="Gradle.PublicTaskControllerTest.getTasksForUser_ShouldReturnTaskList" />
+      <item itemvalue="Gradle.AuthControllerTest" />
+      <item itemvalue="Gradle.PrivateCommentControllerTest" />
+      <item itemvalue="Gradle.TaskServiceTest" />
+      <item itemvalue="Spring Boot.TestTaskApplication" />
+      <item itemvalue="Spring Boot.production" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.PrivateCommentControllerTest" />
+        <item itemvalue="Gradle.AuthControllerTest" />
+        <item itemvalue="Gradle.PublicTaskControllerTest" />
+        <item itemvalue="Gradle.PublicTaskControllerTest.getTasksForUser_ShouldReturnTaskList" />
+        <item itemvalue="Gradle.TaskServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="706e21ee-86ea-4c77-993b-c6431d3b9361" name="Changes" comment="" />
+      <created>1739539933468</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739539933468</updated>
+      <workItem from="1739539934480" duration="3901000" />
+      <workItem from="1739550101580" duration="16000" />
+      <workItem from="1739550160656" duration="249000" />
+      <workItem from="1739550500055" duration="889000" />
+      <workItem from="1739552729245" duration="3216000" />
+      <workItem from="1739556467368" duration="3747000" />
+      <workItem from="1739692873035" duration="11559000" />
+      <workItem from="1739716961849" duration="412000" />
+      <workItem from="1739719421928" duration="2600000" />
+      <workItem from="1739735164055" duration="2138000" />
+      <workItem from="1739741156996" duration="450000" />
+      <workItem from="1739741631343" duration="947000" />
+      <workItem from="1739742635179" duration="80000" />
+      <workItem from="1739742728160" duration="4000" />
+      <workItem from="1739742747216" duration="67000" />
+      <workItem from="1739742843595" duration="148000" />
+      <workItem from="1739743006334" duration="154000" />
+      <workItem from="1739743183007" duration="80000" />
+      <workItem from="1739743277451" duration="16000" />
+      <workItem from="1739743313630" duration="33000" />
+      <workItem from="1739743372640" duration="194000" />
+      <workItem from="1739743611966" duration="501000" />
+      <workItem from="1739775991005" duration="11422000" />
+      <workItem from="1739793739278" duration="170000" />
+      <workItem from="1739793954237" duration="46000" />
+      <workItem from="1739794017923" duration="38000" />
+      <workItem from="1739794087284" duration="56000" />
+      <workItem from="1739794151607" duration="1352000" />
+      <workItem from="1739795763386" duration="4000" />
+      <workItem from="1739795792498" duration="2143000" />
+      <workItem from="1739797983393" duration="1372000" />
+      <workItem from="1739799386577" duration="115000" />
+      <workItem from="1739800149658" duration="1235000" />
+      <workItem from="1739802443774" duration="3103000" />
+      <workItem from="1739805932613" duration="131000" />
+      <workItem from="1739806068568" duration="7000" />
+      <workItem from="1739806370386" duration="47000" />
+      <workItem from="1739806569619" duration="3302000" />
+      <workItem from="1739817446850" duration="668000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

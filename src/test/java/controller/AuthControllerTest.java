@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+
 class AuthControllerTest {
 
     @InjectMocks
