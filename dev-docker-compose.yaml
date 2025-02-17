@@ -24,7 +24,6 @@ services:
   application:
     container_name: application
     build:
-      context: ./testTask-back
       dockerfile: Dockerfile-back
     ports:
       - "8080:8080"

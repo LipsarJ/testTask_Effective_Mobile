@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.example.constructor.ApiConstants.HTTP_OK_200_DESCRIPTION;
+import static org.example.constructor.ApiConstants.*;
 
 @RestController
-@RequestMapping("api/v1/auth")
+@RequestMapping(PUBLIC_V1_AUTH)
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
