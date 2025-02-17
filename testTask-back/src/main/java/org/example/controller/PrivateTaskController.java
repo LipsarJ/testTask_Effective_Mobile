@@ -55,8 +55,8 @@ public class PrivateTaskController {
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ResponseTaskDTO.class)))
     @CommonErrorApiResponsesWith404
-    public ResponseEntity<ResponseTaskDTO> getTaskByID(@PathVariable Long id) {
-        return ResponseEntity.ok(taskService.getTaskByID(id));
+    public ResponseEntity<ResponseTaskDTO> getTaskByID(@PathVariable Long taskId) {
+        return ResponseEntity.ok(taskService.getTaskByID(taskId));
     }
 
     @PostMapping

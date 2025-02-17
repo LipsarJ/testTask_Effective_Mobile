@@ -37,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(WebSecurityConfig.class)
 @SpringBootTest(classes = TestTaskApplication.class)
 @WithMockUser(username = "Lipsar", authorities = "USER")
+@ActiveProfiles("test")
 class PublicTaskControllerTest {
 
     @Autowired
