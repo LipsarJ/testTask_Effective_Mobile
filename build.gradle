@@ -6,9 +6,9 @@ plugins {
 }
 
 def dbUser = System.getenv('DATABASE_USER') ?: 'postgres'
-def dbPassword = System.getenv('DATABASE_PASSWORD') ?: 'Notna20002'
+def dbPassword = System.getenv('DATABASE_PASSWORD') ?: 'password'
 def dbHost = System.getenv('DATABASE_HOST') ?: 'localhost'
-def dbPort = System.getenv('DATABASE_PORT') ?: 5432
+def dbPort = System.getenv('DATABASE_PORT') ?: 5433
 def dbName = System.getenv('DATABASE_NAME') ?: 'testTask'
 def dbUrl = System.getenv('DATABASE_URL') ?: "jdbc:postgresql://$dbHost:$dbPort/$dbName"
 

@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:testTask}
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:testTask}
     driver-class-name: org.postgresql.Driver
     username: ${DATABASE_USER:postgres}
-    password: ${DATABASE_PASSWORD:Notna20002}
+    password: ${DATABASE_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: validate
