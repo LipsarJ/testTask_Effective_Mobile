@@ -4,10 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.controlleradvice.CommonErrorApiResponses;
+import org.example.controlleradvice.CommonErrorApiResponsesWith404;
 import org.example.controlleradvice.Errors;
 import org.example.controlleradvice.SimpleResponse;
 import org.example.dto.request.LoginUserDTO;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.example.constructor.ApiConstants.HTTP_OK_200_DESCRIPTION;
+
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
@@ -33,14 +36,11 @@ public class AuthController {
 
     @PostMapping("register")
     @Operation(summary = "Регистрация пользователя")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Возвращает сообщение об успешной регистрации пользователя",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = SimpleResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Если данные пользователя некорректны",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = SimpleResponse.class)))
-    })
+    @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = SimpleResponse.class)))
+    @CommonErrorApiResponses
+
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDTO signUpDTO) {
         authService.registerUser(signUpDTO);
         return ResponseEntity.ok(new SimpleResponse("User registered successfully!", null));
@@ -48,14 +48,10 @@ public class AuthController {
 
     @PostMapping("signin")
     @Operation(summary = "Аутентификация пользователя")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Возвращает информацию о пользователе с токенами",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = LoginDTO.class))),
-            @ApiResponse(responseCode = "401", description = "Если неверные данные для аутентификации",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = SimpleResponse.class)))
-    })
+    @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = LoginDTO.class)))
+    @CommonErrorApiResponses
     public ResponseEntity<?> signInUser(@Valid @RequestBody LoginUserDTO loginDto) {
         try {
             AuthResponseDTO response = authService.signIn(loginDto);
@@ -74,9 +70,10 @@ public class AuthController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("signout")
     @Operation(summary = "Выход пользователя")
-    @ApiResponse(responseCode = "200", description = "Возвращает сообщение о успешном выходе пользователя",
+    @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = SimpleResponse.class)))
+    @CommonErrorApiResponses
     public ResponseEntity<?> signOutUser() {
 
         AuthResponseDTO response = authService.signOut();
@@ -90,14 +87,10 @@ public class AuthController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("refreshtoken")
     @Operation(summary = "Обновление токена")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Возвращает сообщение об успешном обновлении токена",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = SimpleResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Если токен обновления недействителен",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = SimpleResponse.class)))
-    })
+    @ApiResponse(responseCode = "200", description = HTTP_OK_200_DESCRIPTION,
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = SimpleResponse.class)))
+    @CommonErrorApiResponsesWith404
     public ResponseEntity<?> refreshToken(HttpServletRequest request) {
 
         AuthResponseDTO authResponseDTO = authService.refreshToken(request);
